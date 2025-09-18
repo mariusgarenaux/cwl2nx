@@ -1,6 +1,5 @@
 import networkx as nx
 import yaml
-import matplotlib.pyplot as plt
 from cwl_utils.parser import Workflow, load_document, cwl_version
 from cwl_utils.parser.cwl_v1_0 import LoadingOptions as LoadingOptionsV10
 from cwl_utils.parser.cwl_v1_1 import LoadingOptions as LoadingOptionsV11
@@ -178,7 +177,7 @@ class CWLToNetworkxConnector:
 
         self.nx_graph.remove_nodes_from(drop_nodes)  # drop the input and output nodes
 
-    def plot_nx_graph(self) -> nx.DiGraph:
+    def display_nx_graph(self) -> None:
         r"""
         Plot the networkx graph. If cwl is not yet converted to networkx,
         it first create the networkx DiGraph.
@@ -191,8 +190,6 @@ class CWLToNetworkxConnector:
         if self.nx_graph is None:
             self.convert_to_networkx()
         nx.display(G=self.nx_graph)
-        plt.show()
-        return self.nx_graph
 
 
 if __name__ == "__main__":
@@ -201,5 +198,3 @@ if __name__ == "__main__":
     display_params["output"]["color"] = "orange"
     nx_graph = CWLToNetworkxConnector(dir).convert_to_networkx()
     nx.display(nx_graph)
-    # # plt.savefig("example_display.png")
-    plt.show()

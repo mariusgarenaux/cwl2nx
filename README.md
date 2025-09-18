@@ -27,10 +27,10 @@ plt.show()
 ```
 
 ### Usage of Connector
+
 ```python
 from cwl2nx import CWLToNetworkxConnector
 import networkx as nx
-import matplotlib.pyplot as plt
 
 dir = "workflow.yaml"
 connector = CWLToNetworkxConnector(dir)
@@ -39,6 +39,7 @@ connector.plot_nx_graph()
 ```
 
 ## Example 
+
 
 ![img](example_display.png)
 
