@@ -91,9 +91,14 @@ class CWLToNetworkxConnector:
         else:
             return parsed_cwl
 
-    def convert_to_networkx(self) -> nx.DiGraph:
+    def convert_to_networkx(self, datasets_as_nodes: bool = False) -> nx.DiGraph:
         r"""
         Convert the cwl_utils.parser.Workflow in a networkx graph.
+
+        Parameters :
+        ---
+            - datasets_as_nodes : boolean, whether to have a node for each input
+                and output datasets, or to represent them with edges between steps.
 
         Returns :
         ---
@@ -153,7 +158,25 @@ class CWLToNetworkxConnector:
         if not nx.is_directed_acyclic_graph(self.nx_graph):
             raise Exception(f"The parsed graph is not a DAG (Directed Acyclic Graph).")
 
+        if not datasets_as_nodes:
+            self.remove_dataset_nodes()
+
         return self.nx_graph
+
+    def remove_dataset_nodes(self):
+        drop_nodes = []
+        for each_node_name in self.nx_graph.nodes:
+            this_node = self.nx_graph.nodes[each_node_name]
+            if this_node["cwl"]["node_type"] in ["input", "output"]:
+                # add an edge between steps
+                drop_nodes.append(each_node_name)
+                for each_predecessor in self.nx_graph.predecessors(each_node_name):
+                    for each_successor in self.nx_graph.successors(each_node_name):
+                        self.nx_graph.add_edge(
+                            each_predecessor, each_successor, label=this_node["label"]
+                        )
+
+        self.nx_graph.remove_nodes_from(drop_nodes)  # drop the input and output nodes
 
     def plot_nx_graph(self) -> nx.DiGraph:
         r"""
@@ -176,7 +199,7 @@ if __name__ == "__main__":
     dir = "workflow_example.cwl.yaml"
     display_params = DEFAULT_DISPLAY_PARAMS
     display_params["output"]["color"] = "orange"
-    dag = CWLToNetworkxConnector(dir).convert_to_networkx()
-    nx.display(dag)
-    # plt.savefig("example_display.png")
+    nx_graph = CWLToNetworkxConnector(dir).convert_to_networkx()
+    nx.display(nx_graph)
+    # # plt.savefig("example_display.png")
     plt.show()
