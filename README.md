@@ -41,7 +41,7 @@ connector.plot_nx_graph()
 ## Example 
 
 
-![img](https://github.com/mariusgarenaux/cwl2nx/blob/main/example_display.png)
+![img](https://raw.githubusercontent.com/mariusgarenaux/cwl2nx/refs/heads/main/example_display.png)
 
 ## License
 
