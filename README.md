@@ -11,10 +11,9 @@ pip install cwl2nx
 
 ## Example Usage
 
-> You will find an example of workflow in the GitHub repository : [workflow_example.cwl.yaml](https://raw.githubusercontent.com/mariusgarenaux/cwl2nx/refs/heads/main/workflow_example.cwl.yaml)
+> You will find an example of workflow in the GitHub repository : [workflow_example.cwl.yaml](https://raw.githubusercontent.com/mariusgarenaux/cwl2nx/refs/heads/main/workflow_example.cwl.yaml). Other examples can be found here : https://workflowhub.org
 
 ### Straightforward conversion
-
 
 ```python
 from cwl2nx import CWLToNetworkxConnector
@@ -43,11 +42,11 @@ plt.show()
 ![img](https://raw.githubusercontent.com/mariusgarenaux/cwl2nx/refs/heads/main/example_display.png)
 
 
-### Using visualization libraries
+### Using dagviz
 
 > You'll need to install [`dagviz`](https://wimyedema.github.io/dagviz/index.html#installing) before
 
-> Run the cell below in a notebook
+> /!\ you need to run the code below in a jupyter notebook
 
 ```python
 from cwl2nx import CWLToNetworkxConnector
@@ -63,6 +62,36 @@ dagviz.Dagre(dag)
 
 dagviz.Metro(dag) # github tree dag style
 ```
+
+### Visualization in the terminal
+
+To get a light visualization of the workflow in the terminal, just use the code from this GitHub repo [https://github.com/ctongfei/py-dagviz/blob/main/dagviz.py](https://github.com/ctongfei/py-dagviz/blob/main/dagviz.py) and import visualize_dag function :
+
+```python
+from cwl2nx import CWLToNetworkxConnector
+import networkx as nx
+
+dir = "workflow_example.cwl.yaml"
+dag = CWLToNetworkxConnector(dir).convert_to_networkx(datasets_as_node=True)
+print(visualization_function(dag))
+```
+
+output : 
+
+```text
+• #nsbas.proc
+│ • #nsbas_config.json
+│ │ • #parameter.py
+╰─┴─│─• #tache_init
+    │ ╰─• ivwgayim.dep
+    ╰───┼─• #tache_inter1
+        ╰─│─• #tache_inter2
+          │ ╰─• azbouvks2.dep
+          ╰───│─• azbouvks1.dep
+              ╰─┴─• #tache_end
+                  ╰─• agxlvirt.dep
+```
+
 
 ## License
 
