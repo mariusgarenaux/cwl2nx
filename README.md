@@ -23,25 +23,6 @@ dag = CWLToNetworkxConnector(dir).convert_to_networkx() # dag is networkx.DiGrap
 print(dag.nodes, dag.edges)
 ```
 
-### Basic networkx display
-
-Once .cwl is loaded in networkx, you can use any visualization tool to display the dag.
-
-```python
-from cwl2nx import CWLToNetworkxConnector
-import networkx as nx
-import matplotlib.pyplot as plt
-
-dir = "workflow_example.cwl.yaml"
-connector = CWLToNetworkxConnector(dir)
-dag = connector.convert_to_networkx(datasets_as_nodes=True)
-nx.draw_networkx(dag)
-plt.show()
-```
-
-![img](https://raw.githubusercontent.com/mariusgarenaux/cwl2nx/refs/heads/main/example_display.png)
-
-
 ### Using dagviz
 
 > You'll need to install [`dagviz`](https://wimyedema.github.io/dagviz/index.html#installing) before
@@ -62,6 +43,10 @@ dagviz.Dagre(dag)
 
 dagviz.Metro(dag) # github tree dag style
 ```
+
+![Dagre](https://github.com/mariusgarenaux/cwl2nx/blob/main/doc/dagviz_Dagre.png?raw=true)
+
+![Metro](https://github.com/mariusgarenaux/cwl2nx/blob/main/doc/dagviz_Metro.png?raw=true)
 
 ### Visualization in the terminal
 
@@ -92,6 +77,23 @@ output :
                   ╰─• agxlvirt.dep
 ```
 
+### Basic networkx display
+
+Once .cwl is loaded in networkx, you can use any visualization tool to display the dag.
+
+```python
+from cwl2nx import CWLToNetworkxConnector
+import networkx as nx
+import matplotlib.pyplot as plt
+
+dir = "workflow_example.cwl.yaml"
+connector = CWLToNetworkxConnector(dir)
+dag = connector.convert_to_networkx(datasets_as_nodes=True)
+nx.draw_networkx(dag)
+plt.show()
+```
+
+![](https://github.com/mariusgarenaux/cwl2nx/blob/main/doc/nx_display.png?raw=true)
 
 ## License
 
