@@ -177,20 +177,6 @@ class CWLToNetworkxConnector:
 
         self.nx_graph.remove_nodes_from(drop_nodes)  # drop the input and output nodes
 
-    def display_nx_graph(self) -> None:
-        r"""
-        Plot the networkx graph. If cwl is not yet converted to networkx,
-        it first create the networkx DiGraph.
-
-        Returns :
-        ---
-        The networkx DiGraph associated with the cwl file.
-
-        """
-        if self.nx_graph is None:
-            self.convert_to_networkx()
-        nx.display(G=self.nx_graph)
-
 
 if __name__ == "__main__":
     dir = "workflow_example.cwl.yaml"
