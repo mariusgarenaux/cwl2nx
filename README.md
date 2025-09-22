@@ -79,8 +79,6 @@ output :
 
 ### Basic networkx display
 
-Once .cwl is loaded in networkx, you can use any visualization tool to display the dag.
-
 ```python
 from cwl2nx import CWLToNetworkxConnector
 import networkx as nx
