@@ -15,8 +15,8 @@ outputs: {}
 steps:
   tache_init:
     in:
-      nsbas.proc: nsbas.proc
-      nsbas_config.json : nsbas_config
+      nsbas: nsbas.proc
+      nsbas_config : nsbas_config.json
     out:
     - ivwgayim.dep
     run: tache_init_func

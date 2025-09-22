@@ -196,5 +196,10 @@ if __name__ == "__main__":
     dir = "workflow_example.cwl.yaml"
     display_params = DEFAULT_DISPLAY_PARAMS
     display_params["output"]["color"] = "orange"
-    nx_graph = CWLToNetworkxConnector(dir).convert_to_networkx()
-    nx.display(nx_graph)
+    nx_graph = CWLToNetworkxConnector(
+        dir, display_params=display_params
+    ).convert_to_networkx()
+    # import matplotlib.pyplot as plt
+
+    # nx.draw_networkx(nx_graph)
+    # plt.show()
