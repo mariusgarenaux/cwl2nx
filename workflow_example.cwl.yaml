@@ -1,5 +1,5 @@
 #!/usr/bin/env cwl-runner
-cwlVersion: v1.0
+cwlVersion: v1.2
 class: Workflow
 
 inputs:
@@ -10,7 +10,10 @@ inputs:
   parameter.py:
     type: File
 
-outputs: {}
+outputs:
+    - id: wf_output
+      type: File
+      outputSource: tache_end/agxlvirt.dep
 
 steps:
   tache_init:
@@ -23,6 +26,7 @@ steps:
   tache_inter1:
     in:
       dkhekgal.dep: tache_init/ivwgayim.dep
+      parameter: parameter.py
     out:
     - azbouvks1.dep
     run: tache_inter_func
