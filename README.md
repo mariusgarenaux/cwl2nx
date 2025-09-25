@@ -50,7 +50,7 @@ dagviz.Metro(dag) # github tree dag style
 
 ### Visualization in the terminal
 
-To get a string representing the graph :
+To get a string representing the graph (code from: https://github.com/ctongfei/py-dagviz):
 
 ```python
 from cwl2nx import cwl_to_str
