@@ -15,7 +15,7 @@ from cwl_utils.parser.cwl_v1_0 import LoadingOptions as LoadingOptionsV10
 from cwl_utils.parser.cwl_v1_1 import LoadingOptions as LoadingOptionsV11
 from cwl_utils.parser.cwl_v1_2 import LoadingOptions as LoadingOptionsV12
 
-from cwl2nx.src.term_viz import dag_to_str
+from cwl2nx.term_viz import dag_to_str
 
 NodeType = (
     WorkflowStep
@@ -261,3 +261,10 @@ def cwl_to_str(dir: str, verbose=False) -> str:
         mapping = {each_node: each_node.replace(to_drop, "") for each_node in g.nodes}
         g = nx.relabel_nodes(g, mapping=mapping)
     return dag_to_str(g, round_angle=True)
+
+
+if __name__ == "__main__":
+    # from cwl2nx import CWLToNetworkxConnector, cwl_to_str
+
+    dir = "workflow_example.cwl.yaml"
+    print(cwl_to_str(dir))

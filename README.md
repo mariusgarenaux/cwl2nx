@@ -50,48 +50,40 @@ dagviz.Metro(dag) # github tree dag style
 
 ### Visualization in the terminal
 
-To get a light visualization of the workflow in the terminal, just use the code from this GitHub repo [https://github.com/ctongfei/py-dagviz/blob/main/dagviz.py](https://github.com/ctongfei/py-dagviz/blob/main/dagviz.py) and import visualize_dag function :
+To get a string representing the graph :
 
 ```python
-from cwl2nx import CWLToNetworkxConnector
-import networkx as nx
+from cwl2nx import cwl_to_str
 
 dir = "workflow_example.cwl.yaml"
-dag = CWLToNetworkxConnector(dir).convert_to_networkx(datasets_as_node=True)
-print(visualization_function(dag))
+print(cwl_to_str(dir))
 ```
 
 output : 
 
 ```text
-• #nsbas.proc
-│ • #nsbas_config.json
-│ │ • #parameter.py
-╰─┴─│─• #tache_init
-    │ ╰─• ivwgayim.dep
-    ╰───┼─• #tache_inter1
-        ╰─│─• #tache_inter2
-          │ ╰─• azbouvks2.dep
-          ╰───│─• azbouvks1.dep
-              ╰─┴─• #tache_end
-                  ╰─• agxlvirt.dep
+• nsbas.proc
+│ • nsbas_config.json
+│ │ • parameter.py
+╰─┴─│─• tache_init
+    │ ╰─• tache_init/ivwgayim.dep
+    ╰───┼─• tache_inter1
+        ╰─│─• tache_inter2
+          │ ╰─• tache_inter2/azbouvks2.dep
+          ╰───│─• tache_inter1/azbouvks1.dep
+              ╰─┴─• tache_end
+                  ╰─• wf_output
 ```
 
-### Basic networkx display
+## Link with cwl-utils
 
-```python
-from cwl2nx import CWLToNetworkxConnector
-import networkx as nx
-import matplotlib.pyplot as plt
+Each node of the parsed networkx graph object has an attribute `cwl_utils_object` containing the cwl_utils object, among the following :
 
-dir = "workflow_example.cwl.yaml"
-connector = CWLToNetworkxConnector(dir)
-dag = connector.convert_to_networkx(datasets_as_nodes=True)
-nx.draw_networkx(dag)
-plt.show()
-```
-
-![](https://github.com/mariusgarenaux/cwl2nx/blob/main/doc/nx_display.png?raw=true)
+- WorkflowStep
+- WorkflowStepInput
+- WorkflowStepOutput
+- WorkflowInputParameter
+- WorkflowOutputParameter
 
 ## License
 

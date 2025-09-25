@@ -3,43 +3,43 @@ cwlVersion: v1.2
 class: Workflow
 
 inputs:
-  nsbas.proc:
-    type: File
-  nsbas_config.json:
+  input_file_1.json:
     type: File
   parameter.py:
+    type: File
+  config.yaml:
     type: File
 
 outputs:
     - id: wf_output
       type: File
-      outputSource: tache_end/agxlvirt.dep
+      outputSource: end_task/output.csv
 
 steps:
-  tache_init:
+  init_task:
     in:
-      nsbas: nsbas.proc
-      nsbas_config : nsbas_config.json
+      input_file: input_file_1.json
+      config : config.yaml
     out:
-    - ivwgayim.dep
-    run: tache_init_func
-  tache_inter1:
+    - initialized_dataset.json
+    run: init_task.py
+  inter_task_1:
     in:
-      dkhekgal.dep: tache_init/ivwgayim.dep
+      input_inter_1: init_task/initialized_dataset.json
       parameter: parameter.py
     out:
-    - azbouvks1.dep
-    run: tache_inter_func
-  tache_inter2:
+    - output_inter_1
+    run: inter_task_1.py
+  inter_task_2:
     in:
-      dkhekgal.dep: tache_init/ivwgayim.dep
+      input_inter_1: init_task/initialized_dataset.json
     out:
-    - azbouvks2.dep
-    run: tache_inter_func
-  tache_end:
+    - output_inter_2
+    run: inter_task_2
+  end_task:
     in:
-      jhnjynnb1.dep: tache_inter1/azbouvks1.dep
-      jhnjynnb2.dep: tache_inter2/azbouvks2.dep
+      input_end_1: inter_task_1/output_inter_1
+      input_end_2: inter_task_2/output_inter_2
     out:
-    - agxlvirt.dep
-    run: tache_end_func
+    - output.csv
+    run: end_task.js
