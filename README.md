@@ -62,16 +62,16 @@ print(cwl_to_str(dir))
 output : 
 
 ```text
-• nsbas.proc
-│ • nsbas_config.json
-│ │ • parameter.py
-╰─┴─│─• tache_init
-    │ ╰─• tache_init/ivwgayim.dep
-    ╰───┼─• tache_inter1
-        ╰─│─• tache_inter2
-          │ ╰─• tache_inter2/azbouvks2.dep
-          ╰───│─• tache_inter1/azbouvks1.dep
-              ╰─┴─• tache_end
+• input_file_1.json
+│ • parameter.py
+│ │ • config.yaml
+╰─│─┴─• init_task
+  │   ╰─• init_task/initialized_dataset.json
+  ╰─────┼─• inter_task_1
+        ╰─│─• inter_task_2
+          ╰─│─• inter_task_1/output_inter_1
+            ╰─│─• inter_task_2/output_inter_2
+              ╰─┴─• end_task
                   ╰─• wf_output
 ```
 
