@@ -2,11 +2,20 @@
 
 Lightweight python module to load, validate and visualize CWL (Common Workflow Language) files through networkx graphs.
 It uses [cwl_utils](https://github.com/common-workflow-language/cwl-utils) for parsing and validation.
+It also contains a [CLI app](#cli-app) to quickly visualize cwl files.
+
 
 ## Installation
 
 ```
 pip install cwl2nx
+```
+
+> Note : to use cwl2nx as a [CLI app only](#cli-app), you may prefer to use pipx :
+
+```
+pip install pipx
+pipx install cwl2nx
 ```
 
 ## Example Usage
@@ -74,6 +83,16 @@ output :
               ╰─┴─• end_task
                   ╰─• wf_output
 ```
+
+## CLI app
+
+Just run :
+
+```
+cwl2nx <path_to_cwl>
+```
+
+It should display the same output as [here](#visualization-in-the-terminal).
 
 ## Link with cwl-utils
 
