@@ -94,6 +94,8 @@ Just run :
 cwl2nx <path_to_cwl>
 ```
 
+> run `cwl2nx --help` to get full documentation
+
 ![colored_term](https://github.com/mariusgarenaux/cwl2nx/blob/main/doc/colored_terminal.png?raw=true)
 
 - green: WorkflowInputParameter
