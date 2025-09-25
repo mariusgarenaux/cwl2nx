@@ -99,7 +99,7 @@ cwl2nx <path_to_cwl>
 - green: WorkflowInputParameter
 - yellow: WorkflowStep
 - blue: WorkflowStepInput
-- pink / magenta : WorkflowStepOutput which are note WorkflowStepInput
+- pink / magenta : WorkflowStepOutput which are not WorkflowStepInput
 - red : WorkflowOutputParameter
 
 ## Link with cwl-utils
