@@ -76,12 +76,14 @@ output :
 │ │ • config.yaml
 ╰─│─┴─• init_task
   │   ╰─• init_task/initialized_dataset.json
-  ╰─────┼─• inter_task_1
-        ╰─│─• inter_task_2
-          ╰─│─• inter_task_1/output_inter_1
-            ╰─│─• inter_task_2/output_inter_2
-              ╰─┴─• end_task
-                  ╰─• wf_output
+  ├─────┼─• inter_task_1
+  │     ├─│─• inter_task_2
+  │     │ ╰─│─• inter_task_1/output_inter_1
+  │     │   ╰─│─• inter_task_2/output_inter_2
+  ╰─────│─────┴─┴─• end_task
+        │         ╰─• end_task/output.csv
+        │           ╰─• wf_output
+        ╰─• wf_output_2
 ```
 
 ## CLI app
@@ -92,7 +94,13 @@ Just run :
 cwl2nx <path_to_cwl>
 ```
 
-It should display the same output as [here](#visualization-in-the-terminal).
+![colored_term](https://github.com/mariusgarenaux/cwl2nx/blob/main/doc/colored_terminal.png?raw=true)
+
+- green: WorkflowInputParameter
+- yellow: WorkflowStep
+- blue: WorkflowStepInput
+- pink / magenta : WorkflowStepOutput which are note WorkflowStepInput
+- red : WorkflowOutputParameter
 
 ## Link with cwl-utils
 
