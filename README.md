@@ -85,6 +85,8 @@ Each node of the parsed networkx graph object has an attribute `cwl_utils_object
 - WorkflowInputParameter
 - WorkflowOutputParameter
 
+The type of the node (one of the above in string) is accessible through the parameter `node_type` of each node.
+
 ## License
 
 [Apache 2.0](LICENSE-2.0.txt)

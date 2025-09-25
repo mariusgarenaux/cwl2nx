@@ -14,6 +14,9 @@ from cwl_utils.parser import (
 from cwl_utils.parser.cwl_v1_0 import LoadingOptions as LoadingOptionsV10
 from cwl_utils.parser.cwl_v1_1 import LoadingOptions as LoadingOptionsV11
 from cwl_utils.parser.cwl_v1_2 import LoadingOptions as LoadingOptionsV12
+from cwl_utils.parser.cwl_v1_0 import WorkflowStepOutput as WorkflowStepOutputV10
+from cwl_utils.parser.cwl_v1_1 import WorkflowStepOutput as WorkflowStepOutputV11
+from cwl_utils.parser.cwl_v1_2 import WorkflowStepOutput as WorkflowStepOutputV12
 
 from cwl2nx.term_viz import dag_to_str
 
@@ -141,7 +144,7 @@ class CWLToNetworkxConnector:
             self.nx_graph.nodes[node_id][each_key] = each_value
         self.nx_graph.nodes[node_id]["node_type"] = node_type_str
 
-    def convert_to_networkx(self, datasets_as_nodes: bool = False) -> nx.DiGraph:
+    def convert_to_networkx(self) -> nx.DiGraph:
         r"""
         Convert the cwl_utils.parser.Workflow in a networkx graph. The graph contains
         five types of nodes (following cwl_utils structure):
@@ -160,11 +163,6 @@ class CWLToNetworkxConnector:
         g.nodes[node_name]["cwl_utils_object"]
         >  <class 'cwl_utils.parser.cwl_v1_0.WorkflowStep'>
         ```
-
-        Parameters :
-        ---
-            - datasets_as_nodes : SOON DEPRECATED boolean, whether to have a node for each input
-                and output datasets, or to represent them with edges between steps.
 
         Returns :
         ---
@@ -212,11 +210,31 @@ class CWLToNetworkxConnector:
                 if each_output in self.nx_graph.nodes:
                     self.nx_graph.add_edge(each_step.id, each_output)
                     continue
+
                 # case where output of step is also a WorkflowOutput
                 for each_wf_output in self.cwl_utils_graph.outputs:
                     if each_wf_output.outputSource == each_output:
                         self.nx_graph.add_edge(each_step.id, each_wf_output.id)
-
+                        break
+                else:  # if output is neither a node nor a WorkflowOutput
+                    # then its a WorkflowStepOutput not linked to any WorkflowStepInput
+                    match self.cwl_version:
+                        case "v1.0":
+                            constructor = WorkflowStepOutputV10
+                        case "v1.1":
+                            constructor = WorkflowStepOutputV11
+                        case "v1.2":
+                            constructor = WorkflowStepOutputV12
+                        case _:
+                            raise ValueError(
+                                f"Unexpected value for cwl_version : {self.cwl_version}"
+                            )
+                    self.create_nx_node_from_cwl(
+                        node_id=each_output,
+                        cwl_utils_object=constructor(each_output),
+                        node_type_str="WorkflowStepOutput",
+                    )
+                    self.nx_graph.add_edge(each_step.id, each_output)
         if not nx.is_directed_acyclic_graph(self.nx_graph):
             raise Exception(f"The parsed graph is not a DAG (Directed Acyclic Graph).")
 
