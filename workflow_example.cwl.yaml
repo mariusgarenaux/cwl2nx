@@ -14,6 +14,9 @@ outputs:
     - id: wf_output
       type: File
       outputSource: end_task/output.csv
+    - id: wf_output_2
+      type: File
+      outputSource: init_task/initialized_dataset.json
 
 steps:
   init_task:
@@ -40,6 +43,7 @@ steps:
     in:
       input_end_1: inter_task_1/output_inter_1
       input_end_2: inter_task_2/output_inter_2
+      param: parameter.py
     out:
     - output.csv
     run: end_task.js

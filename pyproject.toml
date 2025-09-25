@@ -29,6 +29,8 @@ license = "APACHE-2.0"
 license-files = ["LICENSE-2.0.txt"]
 dynamic = ["dependencies"]
 
+[project.scripts]
+cwl2nx = "cwl2nx.cli:app"
 [project.urls]
 Repository = "https://github.com/mariusgarenaux/cwl2nx"
 
