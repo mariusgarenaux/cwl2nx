@@ -1,5 +1,6 @@
 import networkx as nx
 import yaml
+import os
 from typing import Literal
 from cwl_utils.parser import (
     Workflow,
@@ -146,6 +147,8 @@ class CWLToNetworkxConnector:
         for each_key, each_value in display_params_input.items():
             self.nx_graph.nodes[node_id][each_key] = each_value
         self.nx_graph.nodes[node_id]["node_type"] = node_type_str
+        to_drop = f"file://{os.getcwd()}/#"
+        self.nx_graph.nodes[node_id]["label"] = node_id.replace(to_drop, "")
 
     def convert_to_networkx(self) -> nx.DiGraph:
         r"""
@@ -267,10 +270,7 @@ def cwl_to_str(
     if isinstance(dag, str):
         dag = CWLToNetworkxConnector(dag).convert_to_networkx()
     if not verbose:
-        import os
-
-        to_drop = f"file://{os.getcwd()}/#"
-        mapping = {each_node: each_node.replace(to_drop, "") for each_node in dag.nodes}
+        mapping = {each_node: dag.nodes[each_node]["label"] for each_node in dag.nodes}
         dag = nx.relabel_nodes(dag, mapping=mapping)
     if display_colors:
         mapping_colors = {
