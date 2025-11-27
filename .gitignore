@@ -1,3 +1,5 @@
 .venv
 cwl2nx.egg-info
 dist
+build/** */
+build/bdist.macosx-14.7-arm64

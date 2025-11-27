@@ -45,7 +45,7 @@ def dag_to_str(g: nx.DiGraph, round_angle: bool = False) -> str:
 
     def _process_dag(g: nx.DiGraph, indent: int):
         for sg in nx.weakly_connected_components(g):
-            _process_component(g.subgraph(sg), indent=indent)
+            _process_component(g.subgraph(sg), indent=indent)  # pyright: ignore
 
     def _process_component(g: nx.DiGraph, indent: int):
         sources = [v for v in g.nodes if g.in_degree(v) == 0]
@@ -54,7 +54,8 @@ def dag_to_str(g: nx.DiGraph, round_angle: bool = False) -> str:
             rows.append(sources[i])
             indents.append(indent + i)
         _process_dag(
-            g.subgraph(set(g.nodes).difference(sources)), indent=indent + len(sources)
+            g.subgraph(set(g.nodes).difference(sources)),  # pyright: ignore
+            indent=indent + len(sources),
         )
 
     _process_dag(g, indent=0)
