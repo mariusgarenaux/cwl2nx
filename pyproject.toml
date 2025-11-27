@@ -42,4 +42,4 @@ where = ["."]
 include = ["cwl2nx"]
 
 [dependency-groups]
-dev = ["build>=1.3.0"]
+dev = ["build>=1.3.0", "twine>=6.2.0"]
