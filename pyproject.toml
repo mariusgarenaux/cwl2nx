@@ -40,3 +40,6 @@ Repository = "https://github.com/mariusgarenaux/cwl2nx"
 [tool.setuptools.packages.find]
 where = ["."]
 include = ["cwl2nx"]
+
+[dependency-groups]
+dev = ["build>=1.3.0"]
