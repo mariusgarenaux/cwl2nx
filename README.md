@@ -4,7 +4,6 @@ Lightweight python module to load, validate and visualize CWL (Common Workflow L
 It uses [cwl_utils](https://github.com/common-workflow-language/cwl-utils) for parsing and validation.
 It also contains a [CLI app](#cli-app) to quickly visualize cwl files.
 
-
 ## Installation
 
 ```
@@ -17,6 +16,24 @@ pip install cwl2nx
 pip install pipx
 pipx install cwl2nx
 ```
+
+## CLI app
+
+Just run :
+
+```
+cwl2nx <path_to_cwl>
+```
+
+> run `cwl2nx --help` to get full documentation
+
+![colored_term](https://github.com/mariusgarenaux/cwl2nx/blob/main/doc/colored_terminal.png?raw=true)
+
+- green: WorkflowInputParameter
+- yellow: WorkflowStep
+- blue: WorkflowStepInput
+- pink / magenta : WorkflowStepOutput which are not WorkflowStepInput
+- red : WorkflowOutputParameter
 
 ## Example Usage
 
@@ -68,7 +85,7 @@ dir = "workflow_example.cwl.yaml"
 print(cwl_to_str(dir))
 ```
 
-output : 
+output :
 
 ```text
 • input_file_1.json
@@ -85,24 +102,6 @@ output :
         │           ╰─• wf_output
         ╰─• wf_output_2
 ```
-
-## CLI app
-
-Just run :
-
-```
-cwl2nx <path_to_cwl>
-```
-
-> run `cwl2nx --help` to get full documentation
-
-![colored_term](https://github.com/mariusgarenaux/cwl2nx/blob/main/doc/colored_terminal.png?raw=true)
-
-- green: WorkflowInputParameter
-- yellow: WorkflowStep
-- blue: WorkflowStepInput
-- pink / magenta : WorkflowStepOutput which are not WorkflowStepInput
-- red : WorkflowOutputParameter
 
 ## Link with cwl-utils
 
