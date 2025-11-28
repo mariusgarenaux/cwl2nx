@@ -28,14 +28,21 @@ import networkx as nx
 
 
 def dag_to_str(g: nx.DiGraph, round_angle: bool = False) -> str:
-    """
+    r"""
     Function highly inspired from https://github.com/ctongfei/py-dagviz/blob/main/dagviz.py
 
     Creates a text rendering of a directed acyclic graph (DAG) for visualization purposes in a terminal.
 
-    :param g: A directed acyclic graph, of type `nx.DiGraph`
-    :param round_angle: Whether to use a round-angled box drawing character or not
-    :return: A multi-line string representation of the directed acyclic graph, each line corresponding to a node
+    Parameters:
+    ---
+
+    - g: A directed acyclic graph, of type `nx.DiGraph`
+    - round_angle: Whether to use a round-angled box drawing character or not
+    - A multi-line string representation of the directed acyclic graph, each line corresponding to a node
+
+    Returns:
+    ---
+    a string with a represention of the graph
     """
     assert nx.is_directed_acyclic_graph(g), "Graph contains cycles"
 

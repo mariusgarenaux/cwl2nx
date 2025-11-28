@@ -134,9 +134,23 @@ class CWLToNetworkxConnector:
         else:
             return parsed_cwl
 
-    def create_nx_node_from_cwl(
+    def _create_nx_node_from_cwl(
         self, node_id: str, cwl_utils_object: NodeType, node_type_str: NodeTypeStr
-    ):
+    ) -> None:
+        r"""
+        Method called iteratively over graph nodes to convert them to networkx.
+
+        Parameters:
+        ---
+
+        - node_id: the identifier of the node on the nx graph
+        - cwl_utils_object: kind of object for cwl_utils lib to attach to the nx node
+        - node_type_str: str version of cwl_utils_object (e.g. `WorkflowStep`)
+
+        Returns:
+        ---
+        None, just update self.nx_graph
+        """
         if node_id in self.nx_graph.nodes:
             return
         self.nx_graph.add_node(node_id)
@@ -191,7 +205,7 @@ class CWLToNetworkxConnector:
             each_cwl_utils_object_list,
         ) in primary_node_type.items():
             for each_cwl_utils_object in each_cwl_utils_object_list:
-                self.create_nx_node_from_cwl(
+                self._create_nx_node_from_cwl(
                     node_id=each_cwl_utils_object.id,
                     cwl_utils_object=each_cwl_utils_object,
                     node_type_str=each_primary_node_type,
@@ -204,7 +218,7 @@ class CWLToNetworkxConnector:
                 if each_input.source in self.nx_graph.nodes:
                     self.nx_graph.add_edge(each_input.source, each_step.id)
                     continue
-                self.create_nx_node_from_cwl(
+                self._create_nx_node_from_cwl(
                     node_id=each_input.source,
                     cwl_utils_object=each_input,
                     node_type_str="WorkflowStepInput",
@@ -217,7 +231,7 @@ class CWLToNetworkxConnector:
                 if each_output in self.nx_graph.nodes:
                     self.nx_graph.add_edge(each_step.id, each_output)
                     continue
-                self.create_nx_node_from_cwl(
+                self._create_nx_node_from_cwl(
                     node_id=each_output,
                     cwl_utils_object=WorkflowStepOutputV12(each_output),
                     node_type_str="WorkflowStepOutput",
@@ -253,7 +267,7 @@ class CWLToNetworkxConnector:
 def cwl_to_str(
     dag: str | nx.DiGraph, verbose: bool = False, display_colors: bool = True
 ) -> str:
-    """
+    r"""
     Convert cwl to networkx, and then convert the nx.DiGraph
     in a easy-to-read string.
 
