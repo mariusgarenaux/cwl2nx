@@ -4,6 +4,7 @@ dir = "workflow_example.cwl.yaml"
 
 print(cwl_to_str(dir, verbose=False, display_colors="md"))
 print(cwl_to_str(dir, verbose=False, display_colors="ANSI"))
+print(cwl_to_str(dir, verbose=False, display_colors="text"))
 # dag = CWLToNetworkxConnector(dir).convert_to_networkx()
 
 # for each_node in dag.nodes:

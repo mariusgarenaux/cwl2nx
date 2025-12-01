@@ -282,7 +282,7 @@ def ansi_to_md_colors(ansi_color: str):
 def cwl_to_str(
     dag: str | nx.DiGraph,
     verbose: bool = False,
-    display_colors: bool | Literal["md", "ANSI"] = True,
+    display_colors: bool | Literal["md", "ANSI", "text"] = True,
 ) -> str:
     r"""
     Convert cwl to networkx, and then convert the nx.DiGraph
@@ -298,6 +298,8 @@ def cwl_to_str(
             - 'md' : returns colored markdown (:red[text_in_red])
                 a translation is made if necessary (e.g. magenta -> violet)
             - 'ANSI' : same as True
+            - 'text': don't display colors, but raw text specifying the node type
+                (WorkflowStepInput, ...)
 
     Returns :
     ---
@@ -317,6 +319,13 @@ def cwl_to_str(
         case "md" | "markdown":
             mapping_colors = {
                 each_node: f":{ansi_to_md_colors(dag.nodes[each_node]['color'])}[{each_node}]"
+                for each_node in dag.nodes
+            }
+        case "text":
+            mapping_colors = {
+                each_node: f"{dag.nodes[each_node]['node_type']}[{each_node}]".replace(
+                    "Workflow", ""
+                )
                 for each_node in dag.nodes
             }
         case _:
