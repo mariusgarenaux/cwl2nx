@@ -1,5 +1,6 @@
 import typer
 from typing_extensions import Annotated
+from typing import Literal
 
 from .cwl2nx import cwl_to_str
 
@@ -7,8 +8,9 @@ from .cwl2nx import cwl_to_str
 def cwlviz(
     cwl: Annotated[str, typer.Argument(help="Path to the cwl file")],
     display_colors: Annotated[
-        bool, typer.Argument(help="Whether to display colors")
-    ] = False,
+        Literal["ANSI", "md", "text"],
+        typer.Argument(help="Whether to display colors"),
+    ] = "text",
     verbose: Annotated[
         bool,
         typer.Argument(help="If verbose is true, display full names of cwl objects"),
