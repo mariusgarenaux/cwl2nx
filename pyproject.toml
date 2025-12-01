@@ -1,6 +1,6 @@
 [project]
 name = "cwl2nx"
-version = "0.0.14"
+version = "0.0.15"
 requires-python = ">= 3.12"
 description = "Lightweight python module to load, validate and visualize CWL (Common Workflow Language) files through networkx graphs."
 authors = [
