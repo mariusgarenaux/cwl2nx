@@ -17,7 +17,7 @@ classifiers = [
 ]
 dependencies = [
     "cwl-utils>=0.40",
-    "networkx>=3.6",
+    "networkx>=2.5.1",
     "pyyaml>=6.0.3",
     "termcolor>=3.2.0",
     "typer>=0.20.0",
