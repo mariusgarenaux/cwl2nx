@@ -264,8 +264,25 @@ class CWLToNetworkxConnector:
         self.nx_graph.remove_nodes_from(drop_nodes)  # drop the input and output nodes
 
 
+def ansi_to_md_colors(ansi_color: str):
+    """
+    Light translator that change ansi escape sequence colors name to
+    markdown one. Supported ansi colors :
+        - green
+        - yellow
+        - blue
+        - magenta
+        - red
+    """
+    if ansi_color == "magenta":
+        return "violet"
+    return ansi_color
+
+
 def cwl_to_str(
-    dag: str | nx.DiGraph, verbose: bool = False, display_colors: bool = True
+    dag: str | nx.DiGraph,
+    verbose: bool = False,
+    display_colors: bool | Literal["md", "ANSI"] = True,
 ) -> str:
     r"""
     Convert cwl to networkx, and then convert the nx.DiGraph
@@ -276,7 +293,12 @@ def cwl_to_str(
     - dag: either a nx.DiGraph or a path to a cwl file
     - verbose: whether to show full id's of cwl objects, or just
         the end (their path from the current working directory)
-    - display_colors: whether to return colored string (from termcolor lib)
+    - display_colors: True returns colored string (from termcolor lib, with ANSI espace
+        sequences). False returns raw string. If a string is passed, it can be :
+            - 'md' : returns colored markdown (:red[text_in_red])
+                a translation is made if necessary (e.g. magenta -> violet)
+            - 'ANSI' : same as True
+
     Returns :
     ---
     A str that displays as a DAG
@@ -286,12 +308,21 @@ def cwl_to_str(
     if not verbose:
         mapping = {each_node: dag.nodes[each_node]["label"] for each_node in dag.nodes}
         dag = nx.relabel_nodes(dag, mapping=mapping)
-    if display_colors:
-        mapping_colors = {
-            each_node: colored(each_node, dag.nodes[each_node]["color"])
-            for each_node in dag.nodes
-        }
-        dag = nx.relabel_nodes(dag, mapping=mapping_colors)
+    match display_colors:
+        case True | "ANSI":
+            mapping_colors = {
+                each_node: colored(each_node, dag.nodes[each_node]["color"])
+                for each_node in dag.nodes
+            }
+        case "md" | "markdown":
+            mapping_colors = {
+                each_node: f":{ansi_to_md_colors(dag.nodes[each_node]['color'])}[{each_node}]"
+                for each_node in dag.nodes
+            }
+        case _:
+            mapping_colors = {each_node: each_node for each_node in dag.nodes}
+
+    dag = nx.relabel_nodes(dag, mapping=mapping_colors)
     return dag_to_str(dag, round_angle=True)
 
 
