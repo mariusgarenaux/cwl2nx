@@ -37,7 +37,7 @@ cwl2nx <path_to_cwl>
 
 ## Example Usage
 
-> You will find an example of workflow in the GitHub repository : [workflow_example.cwl.yaml](https://raw.githubusercontent.com/mariusgarenaux/cwl2nx/refs/heads/main/workflow_example.cwl.yaml). Other examples can be found here : https://workflowhub.org
+> You will find an example of workflow in the GitHub repository : [workflow_example.cwl.yaml](https://raw.githubusercontent.com/mariusgarenaux/cwl2nx/refs/heads/main/workflow_example.cwl.yaml). Other examples can be found here : https://workflowhub.eu
 
 ### Straightforward conversion
 
